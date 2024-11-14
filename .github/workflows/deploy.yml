@@ -27,6 +27,7 @@ jobs:
       - name: Install Dependencies
         run: |
           # Update package list and install required PHP extensions
+          export DEBIAN_FRONTEND=noninteractive
           sudo apt update
           sudo apt install -y php-mbstring php-xml php-curl php-zip php-json php-intl php-sqlite3
 
