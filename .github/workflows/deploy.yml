@@ -64,5 +64,15 @@ jobs:
           php artisan config:cache
           php artisan cache:clear
 
+      
+      - name: Start Laravel Development Server
+        run: |
+          # Start Laravel's built-in development server (on a specific port)
+          php artisan serve --host=0.0.0.0 --port=8000 &
+          
+          # Wait for a few seconds to ensure the server has started
+          sleep 5
+    
+
       - name: Run Tests
         run: php artisan test
