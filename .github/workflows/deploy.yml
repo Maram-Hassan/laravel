@@ -28,7 +28,7 @@ jobs:
         run: |
           # Update package list and install required PHP extensions
           sudo apt update
-          sudo apt install -y php-mbstring php-xml php-curl php-zip php-json php-xmlwriter php-intl php-sqlite3
+          sudo apt install -y php-mbstring php-xml php-curl php-zip php-json php-intl php-sqlite3
 
           # Install Composer
           curl -sS https://getcomposer.org/installer | php
