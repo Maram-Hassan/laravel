@@ -36,6 +36,16 @@ jobs:
           # Install Composer dependencies
           composer install --prefer-dist --no-interaction --no-progress
 
+      - name: Copy .env file
+        run: |
+          # Check if .env.example exists and copy it to .env
+          if [ -f .env.example ]; then
+            cp .env.example .env
+          else
+            echo "No .env.example found. Please add a default .env file to the repository."
+            exit 1
+          fi
+
       - name: Generate Application Key
         run: php artisan key:generate
 
