@@ -19,7 +19,6 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-              with:
           php-version: '8.3'
           extensions: mbstring, xml, curl, zip, json, intl, sqlite3
           coverage: none
@@ -27,7 +26,6 @@ jobs:
       - name: Install Dependencies
         run: |
           # Update package list and install required PHP extensions
-          export DEBIAN_FRONTEND=noninteractive
           sudo apt update
           sudo apt install -y php-mbstring php-xml php-curl php-zip php-json php-intl php-sqlite3
 
@@ -58,4 +56,3 @@ jobs:
 
       - name: Run Tests
         run: php artisan test
-
