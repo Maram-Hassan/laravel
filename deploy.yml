@@ -1,0 +1,59 @@
+name: Laravel CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  laravel:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, xml, curl, zip, json, intl, sqlite3
+          coverage: none
+
+      - name: Install Dependencies
+        run: |
+          # Update package list and install required PHP extensions
+          sudo apt update
+          sudo apt install -y php-mbstring php-xml php-curl php-zip php-json php-xmlwriter php-intl php-sqlite3
+
+          # Install Composer
+          curl -sS https://getcomposer.org/installer | php
+          sudo mv composer.phar /usr/local/bin/composer
+
+          # Install Composer dependencies
+          composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Generate Application Key
+        run: php artisan key:generate
+
+      - name: Set File Permissions
+        run: |
+          sudo chmod -R 755 storage
+          sudo chmod -R 755 bootstrap/cache
+
+      - name: Create SQLite Database
+        run: |
+          touch database/database.sqlite
+          php artisan migrate --force
+
+      - name: Clear Cache
+        run: |
+          php artisan config:cache
+          php artisan cache:clear
+
+      - name: Run Tests
+        run: php artisan test
+
