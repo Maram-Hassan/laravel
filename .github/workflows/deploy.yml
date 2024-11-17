@@ -83,7 +83,7 @@ jobs:
       - name: Start Laravel Development Server
         run: |
           # Start Laravel's built-in development server (on a specific port)
-          php artisan serve 
+          php artisan serve --host=0.0.0.0 --port=8000
           
           # Wait for a few seconds to ensure the server has started
           sleep 5
